@@ -1,0 +1,17 @@
+# Turn on the rewrite engine
+RewriteEngine On
+
+# Prevent looping
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
+
+# Rule for clean article URLs (e.g., /article/my-post-slug)
+RewriteRule ^article/([a-zA-Z0-9-]+)$ article.php?slug=$1 [L]
+
+# Rule for clean category URLs (e.g., /category/technology)
+RewriteRule ^category/([a-zA-Z0-9-]+)$ category.php?name=$1 [L]
+
+# Rule to remove .php extension from other files (e.g., /contact)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
